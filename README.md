@@ -33,12 +33,16 @@ This project aims to predict stock prices using two approaches: ARIMA for time-s
 ### ARIMA Model
 - **Goal**: Time-series forecasting
 - **Optimal Parameters**: `(p,d,q) = (2,1,1)`
-- **Performance (Test RMSE)**: 189.127
+- **Performance (Test RMSE)**: 189.200
+- **Performance (Test MAE)**: 177.645
+- **Performance (Test MAPE)**: 401.57%
 
 ### Gradient Boosting (XGBoost)
 - **Goal**: Regression-based prediction
 - **Best Parameters**: `{colsample_bytree: 0.8, learning_rate: 0.05, max_depth: 5, n_estimators: 200, subsample: 0.8}`
-- **Performance (Test RMSE)**: 1.019
+- **Performance (Test RMSE)**: 1.022
+- **Performance (Test MAE)**: 0.60
+- **Performance (Test MAPE)**: 0.64%
 
 ## Evaluation & Results
 - **ARIMA**: Effective for short-term trends but weak overall.
