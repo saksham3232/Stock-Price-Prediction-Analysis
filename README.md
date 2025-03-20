@@ -1,5 +1,3 @@
-# Yahoo Finance
- 
 # Stock Price Prediction Analysis
 
 ## Overview
