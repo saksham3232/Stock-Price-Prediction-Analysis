@@ -1,66 +1,98 @@
-# Stock Price Prediction Analysis
+# Stock Market Prediction using ARIMA and Gradient Boosting Models - README
 
 ## Overview
-This project aims to predict stock prices using two distinct modeling approaches: the Autoregressive Integrated Moving Average (ARIMA) model for time-series forecasting and Gradient Boosting (via XGBoost) for regression-based predictions. The workflow encompasses data preparation, comprehensive exploratory data analysis (EDA), feature engineering, model training, and thorough evaluation, with a focus on Apple Inc. (AAPL) stock data. The objective is to identify the most effective predictive method to support trading strategies as of March 20, 2025.
 
-## Data Preparation
-### Data Source
-- **Provider**: Yahoo Finance (accessed via the `yfinance` library)
-- **Stocks Analyzed**: AAPL (Apple Inc.), MSFT (Microsoft Corp.), GOOGL (Alphabet Inc.), AMZN (Amazon Inc.), TSLA (Tesla Inc.)
-- **Time Frame**: January 1, 2015, to January 1, 2025
+This project focuses on predicting stock market prices using two distinct methods:
 
-### Libraries Used
-- `pandas`, `numpy`: Data manipulation and numerical computations
-- `yfinance`: Stock data acquisition from Yahoo Finance
-- `statsmodels`: Implementation of ARIMA for time-series analysis
-- `scikit-learn`, `xgboost`: Machine learning tools for splitting, evaluation, and Gradient Boosting
-- `matplotlib`, `seaborn`: Visualization of trends, relationships, and model outcomes
+*   **ARIMA (Autoregressive Integrated Moving Average):** A time-series analysis technique to capture temporal dependencies within the stock price data.
+*   **Gradient Boosting:** A machine learning algorithm that leverages multiple weak learners to create a strong predictive model.
 
-### Data Cleaning
-- Missing values were addressed using forward fill to ensure time-series continuity, preserving data integrity for modeling.
+The workflow encompasses several key stages: data preparation, exploratory data analysis (EDA), feature engineering, model building, hyperparameter tuning, and model evaluation.
 
-## Exploratory Data Analysis (EDA)
-- **Trends Analysis**: Examined historical closing prices of AAPL to identify growth patterns and volatility over the decade.
-- **Moving Averages**: Calculated 20-day and 50-day rolling means to smooth short-term fluctuations and highlight long-term trends.
-- **Trading Volume**: Analyzed market activity and liquidity, noting volume spikes tied to significant price movements.
-- **Correlation Heatmap**: Explored relationships among Open, High, Low, Close prices, and Volume, revealing strong price correlations and volume’s distinct role.
-- **Pair Plots**: Visualized pairwise variable interactions, confirming linear price relationships and exploring volume dynamics.
-- **Distribution of Closing Prices**: Assessed the right-skewed distribution of AAPL closing prices, indicating frequent lower values with occasional peaks.
-- **Box Plot for Volume**: Examined trading volume spread and outliers, linking high-volume days to market events.
-- **Rolling Statistics (Mean and Standard Deviation)**: Computed 30-day rolling mean and standard deviation to evaluate stationarity and volatility, showing non-stationary behavior.
+## Project Structure
 
-## Feature Engineering
-- **Lagged Features**: Included the previous day’s closing price (`Lag_1_Close`) to capture temporal dependencies.
-- **Rolling Mean**: Derived a 5-day rolling mean (`Rolling_Mean_5`) to represent short-term trends.
-- **Daily Price Change**: Calculated percentage change in closing prices (`Pct_Change_Close`) for volatility and momentum insights.
-- **Data Integrity**: Dropped rows with missing values post-engineering to ensure a complete dataset.
+The project is structured into the following steps:
 
-## Modeling Approaches
-### ARIMA Model
-- **Goal**: Forecast stock prices using time-series properties, focusing on linear trends and seasonality.
-- **Optimal Parameters**: `(p, d, q) = (2, 1, 1)`, determined through systematic tuning.
-- **Performance (Test RMSE)**: 189.181, indicating large prediction errors.
-- **Performance (Test MAE)**: 177.625, showing significant average deviations.
-- **Performance (Test MAPE)**: 401.54%, reflecting poor relative accuracy.
+1.  **Data Preparation:**
+    *   **Import Libraries:** Loading essential Python libraries for data manipulation (Pandas, NumPy), stock data retrieval (`yfinance`), time series analysis (`statsmodels`), visualization (`matplotlib`, `seaborn`), and machine learning (`scikit-learn`, `xgboost`).
+    *   **Download Data:** Fetching historical stock data (Open, High, Low, Close, Volume) for specified tickers (AAPL, MSFT, GOOGL, AMZN, TSLA) from Yahoo Finance between "2015-01-01" and "2025-01-01". Saving the Apple stock data as a CSV file ("Apple\_Data.csv").
+    *   **Handle Missing Values:** Addressing missing data points using forward fill (`ffill`) to maintain data continuity.
 
-### Gradient Boosting (XGBoost)
-- **Goal**: Predict stock prices by capturing complex, non-linear patterns via regression.
-- **Best Parameters**: `{colsample_bytree: 0.8, learning_rate: 0.05, max_depth: 5, n_estimators: 200, subsample: 0.8}`, optimized through tuning.
-- **Performance (Test RMSE)**: 0.97, demonstrating minimal errors.
-- **Performance (Test MAE)**: 0.50, indicating tight alignment with actual values.
-- **Performance (Test MAPE)**: 0.55%, showcasing high relative accuracy.
+2.  **Exploratory Data Analysis (EDA):**
+    *   **Description:** Calculating descriptive statistics (mean, standard deviation, quartiles) to understand the data distribution.
+    *   **Info:** Displaying the data types and non-null counts for each column.
+    *   **Visualize Trends:** Plotting the closing prices over time to visually identify trends.
+    *   **Moving Averages:** Calculating and visualizing 20-day and 50-day rolling means to smooth short-term fluctuations.
+    *   **Visualize Volume Trends:** Plotting trading volume over time to analyze trading activity.
+    *   **Correlation Heatmap:** Displaying the correlation matrix between different features to assess relationships.
+    *   **Pair Plots:** Visualizing pairwise relationships between variables in the dataset.
+    *   **Distribution of Closing Prices:** Plotting a histogram and KDE to understand the distribution of closing prices.
+    *   **Box Plot for Volume:** Identifying outliers in trading volume using a box plot.
+    *   **Rolling Statistics (Mean and Standard Deviation):** Calculating and visualizing rolling mean and standard deviation to assess time series stationarity.
 
-## Evaluation & Results
-- **ARIMA**: Effective for short-term trend modeling but struggles with non-linear market dynamics, resulting in high test errors.
-- **XGBoost**: Delivers superior accuracy with significantly lower RMSE, MAE, and MAPE, adept at handling volatility and complex relationships.
-- **Visualization**: Plots of actual vs. predicted prices highlight ARIMA’s divergence and XGBoost’s precision.
+3.  **Feature Engineering:**
+    *   **Create Features:** Generating new features to improve model performance:
+        *   Lagged closing price (previous day's closing price).
+        *   5-day rolling mean of closing prices.
+        *   Percentage change in closing price (daily returns).
+    *   Removing rows with any missing values resulting from feature engineering.
 
-## Recommendations
-- **Prioritize Gradient Boosting**: Leverage XGBoost for trading strategies due to its robust performance, ideal for short-term buy/sell decisions.
-- **Enhanced Features**: Incorporate technical indicators (e.g., RSI, MACD), volatility measures, and sentiment data from sources like [StockTwits](https://stocktwits.com/) to refine predictions.
-- **Model Optimization**: Apply regularization (L1, L2) to prevent overfitting and use Bayesian optimization for efficient hyperparameter tuning.
+4.  **Modeling:**
 
-## How to Run
-1. Install dependencies:
-   ```bash
-   pip install pandas numpy yfinance statsmodels scikit-learn xgboost matplotlib seaborn
+    *   **ARIMA Model with Hyperparameter Tuning:**
+        *   Defining a "safe\_mape" function to handle edge cases in MAPE calculation
+        *   Defining a "check\_stationarity" function to check if the time series is stationary
+        *   Splitting the data into training and testing sets (80% train, 20% test).
+        *   Defining a function "optimize\_arima" to identify the best parameters for the ARIMA model
+        *   Fitting and forecasting with ARIMA
+        *   Evaluating the model performance using Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and Mean Absolute Percentage Error (MAPE).
+    *   **ARIMA Model with Fixed Parameters:**
+        *   Setting fixed parameters (p=2, d=1, q=2) for the ARIMA model.
+        *   Fitting the ARIMA model.
+        *   Forecasting the next 10 steps.
+        *   Calculating performance metrics (RMSE, MAE, MAPE, R-squared, MASE).
+        *   Comparing the R-squared value to a simple benchmark model (mean).
+
+    *   **Gradient Boosting Model with Hyperparameter Tuning:**
+        *   Defining features (Lag\_1\_Close, Rolling\_Mean\_5, Pct\_Change\_Close) and target variable (Close).
+        *   Splitting data into training and testing sets.
+        *   Setting up a parameter grid for hyperparameter tuning.
+        *   Using RandomizedSearchCV for hyperparameter optimization.
+        *   Training the XGBoost model.
+        *   Evaluating model performance on the test set.
+
+## Model Evaluation Metrics
+
+The following metrics are used to evaluate the performance of the models:
+
+*   **Root Mean Squared Error (RMSE):** Measures the average magnitude of the errors. Lower values indicate better performance.
+*   **Mean Absolute Error (MAE):** Measures the average absolute difference between predicted and actual values. Lower values indicate better performance.
+*   **Mean Absolute Percentage Error (MAPE):** Measures the average percentage difference between predicted and actual values. Lower values indicate better performance.
+*   **R-squared (R²):** Measures the proportion of variance in the dependent variable that can be predicted from the independent variables. Higher values (closer to 1) indicate a better fit.
+*   **Mean Absolute Scaled Error (MASE):** Measures the forecast accuracy compared to a naive forecast. Values less than 1 indicate better performance than the naive forecast.
+
+## Results
+
+*   **ARIMA with Hyperparameter Tuning:**
+    *   Best ARIMA Parameters: (2, 1, 2)
+    *   ARIMA RMSE: 62.8092
+    *   ARIMA MAE: 56.6089
+    *   ARIMA MAPE: 28.38%
+*   **ARIMA with Fixed Parameters:**
+    *   Fixed Parameters for ARIMA: p=2, d=1, q=2
+    *   ARIMA RMSE: 4.5548
+    *   ARIMA MAE: 3.7653
+    *   ARIMA MAPE: 1.47%
+    *   ARIMA R²: -0.8008 (Poor fit)
+    *   ARIMA MASE: 3.1219
+*   **Gradient Boosting Model with Hyperparameter Tuning:**
+
+    *   Best parameters: {'subsample': 0.5, 'min\_child\_weight': 5, 'max\_depth': 30, 'learning\_rate': 0.1, 'gamma': 0.1, 'colsample\_bytree': 1}
+    *   Tuned XGBoost RMSE: 0.8938
+    *   Tuned XGBoost MAE: 0.4847
+    *   Tuned XGBoost MAPE: 0.57%
+    *   Tuned XGBoost R^2: 0.9998
+
+## Conclusion
+
+This project demonstrated the application of ARIMA and Gradient Boosting models for stock market price prediction. The Gradient Boosting model with hyperparameter tuning outperformed the ARIMA models, achieving a high R-squared value and low error metrics. The results highlight the potential of machine learning techniques for financial forecasting.
