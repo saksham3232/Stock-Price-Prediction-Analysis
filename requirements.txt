@@ -1,23 +1,10 @@
-# requirements.txt for Stock Market Prediction Analysis
-
-# Core data manipulation and numerical computation
-pandas>=2.2.1          # DataFrame operations, handling stock data
-numpy>=1.26.4          # Numerical computations, arrays, RMSE calculations
-
-# Financial data retrieval
-yfinance>=0.2.37       # Downloads historical stock data from Yahoo Finance (e.g., yf.download)
-
-# Time-series analysis and statistical modeling
-statsmodels>=0.14.1    # ARIMA modeling, statistical tests (e.g., adfuller, plot_acf)
-
-# Visualization libraries
-matplotlib>=3.8.3      # Core plotting for trends, rolling averages
-seaborn>=0.13.2        # Enhanced visualizations (e.g., heatmaps, pair plots, histograms)
-
-# Machine learning tools
-scikit-learn>=1.4.1.post1  # Utilities: train_test_split, GridSearchCV, mean_squared_error
-xgboost>=2.0.3         # Gradient Boosting model (XGBRegressor)
-
-# Optional: Suppress warnings (used in the notebook)
-# Remove if not needed in production
-# warnings            # Part of Python standard library, no need to install separately
+numpy
+pandas
+matplotlib
+scikit-learn
+tensorflow
+yfinance
+seaborn
+plotly
+streamlit
+keras
