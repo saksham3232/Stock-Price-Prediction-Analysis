@@ -60,10 +60,6 @@ pip install -r requirements.txt
 
 Contributions are welcome! Please open an issue or submit a pull request for improvements and new features.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Author
 
 [Saksham3232](https://github.com/saksham3232)
